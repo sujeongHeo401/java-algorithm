@@ -1,0 +1,35 @@
+package jagorithm;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class P1 {
+    public static List<Integer> jimOrders(List<List<Integer>> orders){
+        List<Integer> res = new ArrayList<>();
+        List<Integer> fin = new ArrayList<>();
+        
+        for(int i = 0; i < orders.size(); i++){
+            int b = 0;
+            for(int j = 0; j < 2; j++){
+                b += orders.get(i).get(j);
+            }
+            res.add(i, b);
+        }
+        
+        int w = Collections.max(res);
+        int i = 0;
+        while (i < res.size()){
+            int a = Collections.min(res);
+            int j = res.indexOf(a);
+            fin.add(j+1);
+            res.set(j, w+1);
+            i++;
+        }
+        return fin;
+    }
+}
+
+
+
+////////////////////////// https://www.hackerrank.com/challenges/jim-and-the-orders/problem
