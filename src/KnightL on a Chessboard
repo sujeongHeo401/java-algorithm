@@ -1,0 +1,50 @@
+import java.sql.Array;
+import java.util.*;
+
+public class shortest_path_bfs {
+
+    public static List<List<Integer>> knightlOnAChessboard(int n){
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i = 1; i < n; i++){
+            List<Integer> r = new ArrayList<>();
+            for(int j = 1; j < n; j++){
+                int[][] dir = new int[][]{{i, j}, {i, -1*j}, {-1*i, j}, {-1*i, -1*j},
+                        {j, i}, {-1*j, i}, {j, -1*i}, {-1*j, -1*i}};
+                Set<String> visited = new HashSet<>();
+                int ret = bfs(n, visited, dir);
+                r.add(ret);
+            }
+            res.add(r);
+        }
+        return res;
+    }
+
+    public static int bfs(int n, Set<String> set, int[][] dir){
+        Queue<int []> q = new LinkedList<>(); // 너비 탐색을 하기 위한 자료구조
+        q.add(new int[]{0, 0});/// 0,0 에서 시작을 하니까 ;;;;;;;;;;;;;;
+        set.add("0:0");
+        int level = 0;
+
+        while(!q.isEmpty()){
+            int size = q.size(); ///////////////// 초기에는 1이겠지
+            while(size-- >0){
+                int[] p = q.poll();
+                if(p[0] == n - 1 && p[1] == n - 1){
+                    return level;
+                }
+                for(int[] d : dir){
+                    int x = d[0] + p[0];
+                    int y = d[1] + p[1];
+                    if(x < 0 || y < 0 || x >= n || y >= n || set.contains(x + ":" + y))
+                        continue;
+                    set.add(x + ":" + y);
+                    q.offer(new int[]{x, y});
+                }
+            }
+            level++; /// 레베루 업!!
+        }
+        return -1;
+    }
+
+
+}
